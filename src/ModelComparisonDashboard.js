@@ -7,46 +7,26 @@ import {
 const ModelComparisonDashboard = () => {
   const [activeTab, setActiveTab] = useState('metrics');
 
-  // 預設指標數據
   const metricsData = {
-    models: ['선형 회귀', 'ARIMA', '랜덤 포레스트', 'XGBoost'],
+    models: ["선형 회귀", "ARIMA", "랜덤 포레스트", "XGBoost"],
     MAE: [112.56, 114.04, 112.35, 114.84],
     MSE: [16838.93, 17245.14, 16914.73, 17714.74],
     RMSE: [129.76, 131.32, 130.06, 133.10],
     MAPE: [67.31, 67.92, 67.73, 68.49],
-    R2: [-0.00008, -0.02420, -0.00458, -0.05209],
+    R2: [-0.00008, -0.02420, -0.00458, -0.05209]
   };
-
-  // 🔧 補上假資料，避免程式錯誤
-  const actualValues = Array.from({ length: 50 }, () => Math.random() * 100);
-  const lrValues = Array.from({ length: 50 }, () => Math.random() * 100);
-  const arimaValues = Array.from({ length: 50 }, () => Math.random() * 100);
-  const rfValues = Array.from({ length: 50 }, () => Math.random() * 100);
-  const xgbValues = Array.from({ length: 50 }, () => Math.random() * 100);
 
   const prepareMetricsData = (metricName) => {
     return metricsData.models.map((model, index) => ({
       name: model,
-      value: metricsData[metricName][index],
+      value: metricsData[metricName][index]
     }));
   };
-
-  const predictionData = Array(50).fill().map((_, i) => ({
-    index: i,
-    actual: actualValues[i],
-    linearRegression: lrValues[i],
-    arima: arimaValues[i],
-    randomForest: rfValues[i],
-    xgboost: xgbValues[i],
-  }));
 
   const rankMetrics = () => {
     const metrics = ['MAE', 'MSE', 'RMSE', 'MAPE', 'R2'];
     const ranks = {};
-
-    metricsData.models.forEach(model => {
-      ranks[model] = { total: 0 };
-    });
+    metricsData.models.forEach(model => (ranks[model] = { total: 0 }));
 
     metrics.forEach(metric => {
       const values = metricsData[metric];
@@ -59,93 +39,135 @@ const ModelComparisonDashboard = () => {
       });
     });
 
-    return Object.entries(ranks).map(([model, scores]) => ({
-      model,
-      ...scores
-    })).sort((a, b) => a.total - b.total);
+    return Object.entries(ranks).map(([model, scores]) => ({ model, ...scores }))
+      .sort((a, b) => a.total - b.total);
   };
 
   const renderMetricsCharts = () => (
-    <div className="flex flex-col space-y-8">
-      <h3 className="text-xl font-bold mb-4 text-center">모델 평가 지표 비교</h3>
-      <ChartComponent title="평균 절대 오차 (MAE)" metric="MAE" color="#8884d8" />
-      <ChartComponent title="평균 제곱 오차 (MSE)" metric="MSE" color="#82ca9d" />
-      <ChartComponent title="평균 제곱근 오차 (RMSE)" metric="RMSE" color="#ffc658" />
-      <ChartComponent title="평균 절대 백분율 오차 (MAPE)" metric="MAPE" color="#ff8042" suffix="%" />
-      <ChartComponent title="결정 계수 (R²)" metric="R2" color="#8884d8" decimals={5} />
-      <RankingTable />
-    </div>
-  );
-
-  const ChartComponent = ({ title, metric, color, suffix = '', decimals = 2 }) => (
     <div>
-      <h4 className="text-lg font-semibold mb-2">{title}</h4>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={prepareMetricsData(metric)}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip formatter={(value) => [value.toFixed(decimals) + suffix, metric]} />
-          <Bar dataKey="value" fill={color} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
+      <h2>모델 평가 지표 비교</h2>
 
-  const RankingTable = () => (
-    <div>
-      <h4 className="text-lg font-semibold mb-2">모델 종합 순위</h4>
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 border-b">모델</th>
-            {['MAE', 'MSE', 'RMSE', 'MAPE', 'R2'].map(metric => (
-              <th key={metric} className="py-2 px-4 border-b text-center">{metric}</th>
-            ))}
-            <th className="py-2 px-4 border-b text-center">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rankMetrics().map((item, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-              <td className="py-2 px-4 border-b font-semibold">{item.model}</td>
-              {['MAE', 'MSE', 'RMSE', 'MAPE', 'R2'].map(metric => (
-                <td key={metric} className="py-2 px-4 border-b text-center">{item[metric]}</td>
-              ))}
-              <td className="py-2 px-4 border-b text-center font-bold">{item.total}</td>
+      <div style={{ marginBottom: '2rem' }}>
+        <h4>평균 절대 오차 (MAE)</h4>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={prepareMetricsData('MAE')}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h4>평균 제곱 오차 (MSE)</h4>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={prepareMetricsData('MSE')}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="value" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h4>결정 계수 (R²)</h4>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={prepareMetricsData('R2')}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h4>모델 종합 순위</h4>
+        <table border="1" cellPadding="8">
+          <thead>
+            <tr>
+              <th>모델</th>
+              <th>MAE</th>
+              <th>MSE</th>
+              <th>RMSE</th>
+              <th>MAPE</th>
+              <th>R²</th>
+              <th>Total</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className="text-sm mt-2 text-gray-600">※참고: 순위는 1부터 시작하며, 1이 가장 좋음. 총점이 낮을수록 전체 성능이 우수함.</p>
+          </thead>
+          <tbody>
+            {rankMetrics().map((r, i) => (
+              <tr key={i}>
+                <td>{r.model}</td>
+                <td>{r.MAE}</td>
+                <td>{r.MSE}</td>
+                <td>{r.RMSE}</td>
+                <td>{r.MAPE}</td>
+                <td>{r.R2}</td>
+                <td><strong>{r.total}</strong></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>※참고: 순위는 1부터 시작하며, 1이 가장 좋음. 총점이 낮을수록 전체 성능이 우수함.</p>
+      </div>
     </div>
   );
 
-  const ModelConclusion = () => (
-    <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-      <h3 className="text-xl font-bold mb-4">모델 평가 결론</h3>
-      <ol className="list-decimal ml-6 space-y-2">
+  const renderConclusion = () => (
+    <div style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
+      <h3>모델 평가 결론</h3>
+      <ol>
         <li><strong>랜덤 포레스트 모델</strong>이 MAE와 RMSE 지표에서 가장 우수한 성능을 보임</li>
         <li><strong>선형 회귀</strong>는 R² 지표에서 가장 높았음</li>
         <li><strong>ARIMA</strong>는 중간 성능</li>
         <li><strong>XGBoost</strong>는 상대적으로 낮은 성능</li>
       </ol>
-      <p className="mt-4"><strong>전체 결론:</strong> 랜덤 포레스트가 전반적으로 가장 적합함</p>
+      <p><strong>전체 결론:</strong> 랜덤 포레스트가 전반적으로 가장 적합함</p>
     </div>
   );
 
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">전자상거래 예측 모델 비교</h2>
-      <div className="flex justify-center mb-6">
-        <button className={`px-4 py-2 mx-2 rounded ${activeTab === 'metrics' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`} onClick={() => setActiveTab('metrics')}>
+    <div style={{ padding: '2rem' }}>
+      <h2 style={{ textAlign: 'center', fontSize: '1.8rem', marginBottom: '1rem' }}>
+        전자상거래 예측 모델 비교
+      </h2>
+
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+        <button
+          onClick={() => setActiveTab('metrics')}
+          style={{
+            padding: '0.5rem 1rem',
+            margin: '0 0.5rem',
+            backgroundColor: activeTab === 'metrics' ? '#007bff' : '#ccc',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px'
+          }}
+        >
           평가 지표 비교
         </button>
-        <button className={`px-4 py-2 mx-2 rounded ${activeTab === 'conclusion' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`} onClick={() => setActiveTab('conclusion')}>
+        <button
+          onClick={() => setActiveTab('conclusion')}
+          style={{
+            padding: '0.5rem 1rem',
+            margin: '0 0.5rem',
+            backgroundColor: activeTab === 'conclusion' ? '#007bff' : '#ccc',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px'
+          }}
+        >
           결론 요약
         </button>
       </div>
-      {activeTab === 'metrics' ? renderMetricsCharts() : <ModelConclusion />}
+
+      {activeTab === 'metrics' ? renderMetricsCharts() : renderConclusion()}
     </div>
   );
 };
