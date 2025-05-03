@@ -77,7 +77,7 @@ const ModelComparisonDashboard = () => {
   const renderMetricsCharts = () => {
     return (
       <div className="metrics-charts">
-        <h3 className="text-xl font-bold mb-4 text-center">모델 평가 지표 비교</h3>
+        {/* 제목은 이미 상위 컴포넌트에서 추가했으므로 여기서 제거 */}
         
         {/* MAE 차트 */}
         <div className="mb-8">
@@ -190,7 +190,7 @@ const ModelComparisonDashboard = () => {
   const renderPredictionCharts = () => {
     return (
       <div className="prediction-charts">
-        <h3 className="text-xl font-bold mb-4 text-center">모델 예측 결과 시각화</h3>
+        {/* 제목은 이미 상위 컴포넌트에서 추가했으므로 여기서 제거 */}
         
         {/* 예측 결과 차트 */}
         <div className="mb-8">
@@ -258,32 +258,33 @@ const ModelComparisonDashboard = () => {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6 text-center">전자상거래 판매 예측 모델 비교</h2>
       
-      {/* 탭 전환 */}
+      {/* 탭 전환 - 이미지 1처럼 스타일 조정 */}
       <div className="flex justify-center mb-6">
         <button
-          className={`px-4 py-2 mx-2 rounded ${activeTab === 'metrics' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'metrics' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
           onClick={() => setActiveTab('metrics')}
         >
           평가 지표 비교
         </button>
         <button
-          className={`px-4 py-2 mx-2 rounded ${activeTab === 'predictions' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'predictions' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
           onClick={() => setActiveTab('predictions')}
         >
           예측 결과 시각화
         </button>
       </div>
       
-      {/* 콘텐츠 영역 */}
-      <div className="content-area">
+      {/* 콘텐츠 영역 - 제목 중앙 정렬 */}
+      <div className="content-area text-center">
+        <h3 className="text-xl font-bold mb-6">{activeTab === 'metrics' ? '모델 평가 지표 비교' : '모델 예측 결과 시각화'}</h3>
         {activeTab === 'metrics' ? renderMetricsCharts() : renderPredictionCharts()}
       </div>
       
       {/* 모델 결론 */}
-      <div className="mt-8 p-6 bg-gray-50 rounded-lg">
+      <div className="mt-8 p-6 bg-gray-50 rounded-lg text-center">
         <h3 className="text-xl font-bold mb-4">모델 평가 결론</h3>
         <p className="mb-2">MAE, MSE, RMSE, MAPE 및 R² 다섯 가지 평가 지표에 기반한 종합 분석:</p>
-        <ol className="list-decimal ml-6 space-y-2">
+        <ol className="list-decimal mx-auto inline-block text-left space-y-2">
           <li><strong>랜덤 포레스트 모델</strong>이 MAE와 RMSE 지표에서 가장 우수한 성능을 보이며, 종합 순위 1위입니다.</li>
           <li><strong>선형 회귀 모델</strong>이 R² 지표에서 가장 우수한 성능을 보이며, 종합 순위 2위입니다.</li>
           <li><strong>ARIMA 모델</strong>은 시계열 예측에서 일정한 성능을 보이지만, 종합 순위 3위입니다.</li>
