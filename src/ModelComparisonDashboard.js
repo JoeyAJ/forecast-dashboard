@@ -77,11 +77,9 @@ const ModelComparisonDashboard = () => {
   const renderMetricsCharts = () => {
     return (
       <div className="metrics-charts">
-        {/* 제목은 이미 상위 컴포넌트에서 추가했으므로 여기서 제거 */}
-        
         {/* MAE 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">평균 절대 오차 (MAE)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">평균 절대 오차 (MAE)</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={prepareMetricsData('MAE')}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -95,7 +93,7 @@ const ModelComparisonDashboard = () => {
         
         {/* MSE 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">평균 제곱 오차 (MSE)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">평균 제곱 오차 (MSE)</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={prepareMetricsData('MSE')}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -109,7 +107,7 @@ const ModelComparisonDashboard = () => {
         
         {/* RMSE 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">평균 제곱근 오차 (RMSE)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">평균 제곱근 오차 (RMSE)</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={prepareMetricsData('RMSE')}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -123,7 +121,7 @@ const ModelComparisonDashboard = () => {
         
         {/* MAPE 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">평균 절대 백분율 오차 (MAPE)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">평균 절대 백분율 오차 (MAPE)</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={prepareMetricsData('MAPE')}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -137,7 +135,7 @@ const ModelComparisonDashboard = () => {
         
         {/* R² 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">결정 계수 (R²)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">결정 계수 (R²)</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={prepareMetricsData('R2')}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -151,8 +149,8 @@ const ModelComparisonDashboard = () => {
         
         {/* 모델 순위 테이블 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">모델 종합 순위</h4>
-          <div className="overflow-x-auto">
+          <h4 className="text-lg font-semibold mb-2 text-center">모델 종합 순위</h4>
+          <div className="overflow-x-auto flex justify-center">
             <table className="min-w-full bg-white border border-gray-300">
               <thead>
                 <tr>
@@ -180,7 +178,7 @@ const ModelComparisonDashboard = () => {
               </tbody>
             </table>
           </div>
-          <p className="text-sm mt-2 text-gray-600">참고: 순위는 1부터 시작하며, 1이 가장 좋음. 총점이 낮을수록 전체 성능이 우수함.</p>
+          <p className="text-sm mt-2 text-center">참고: 순위는 1부터 시작하며, 1이 가장 좋음. 총점이 낮을수록 전체 성능이 우수함.</p>
         </div>
       </div>
     );
@@ -190,11 +188,9 @@ const ModelComparisonDashboard = () => {
   const renderPredictionCharts = () => {
     return (
       <div className="prediction-charts">
-        {/* 제목은 이미 상위 컴포넌트에서 추가했으므로 여기서 제거 */}
-        
         {/* 예측 결과 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">각 모델 예측 결과 비교 (첫 50개 샘플)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">각 모델 예측 결과 비교 (첫 50개 샘플)</h4>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={predictionData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -213,7 +209,7 @@ const ModelComparisonDashboard = () => {
         
         {/* 모델 오차 차트 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">각 모델 예측 오차</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">각 모델 예측 오차</h4>
           <ResponsiveContainer width="100%" height={400}>
             <ComposedChart data={predictionData.map(item => ({
               index: item.index,
@@ -237,7 +233,7 @@ const ModelComparisonDashboard = () => {
         
         {/* 실제값 vs 예측값 산점도 */}
         <div className="mb-8">
-          <h4 className="text-lg font-semibold mb-2">실제값과 예측값 산점도 (랜덤 포레스트 모델)</h4>
+          <h4 className="text-lg font-semibold mb-2 text-center">실제값과 예측값 산점도 (랜덤 포레스트 모델)</h4>
           <ResponsiveContainer width="100%" height={400}>
             <ComposedChart data={predictionData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -258,7 +254,7 @@ const ModelComparisonDashboard = () => {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6 text-center">전자상거래 판매 예측 모델 비교</h2>
       
-      {/* 탭 전환 - 이미지 1처럼 스타일 조정 */}
+      {/* 탭 전환 */}
       <div className="flex justify-center mb-6">
         <button
           className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'metrics' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
@@ -274,9 +270,13 @@ const ModelComparisonDashboard = () => {
         </button>
       </div>
       
-      {/* 콘텐츠 영역 - 제목 중앙 정렬 */}
-      <div className="content-area text-center">
-        <h3 className="text-xl font-bold mb-6">{activeTab === 'metrics' ? '모델 평가 지표 비교' : '모델 예측 결과 시각화'}</h3>
+      {/* 콘텐츠 영역 제목 */}
+      <h3 className="text-xl font-bold mb-6 text-center">
+        {activeTab === 'metrics' ? '모델 평가 지표 비교' : '모델 예측 결과 시각화'}
+      </h3>
+      
+      {/* 콘텐츠 영역 */}
+      <div className="content-area">
         {activeTab === 'metrics' ? renderMetricsCharts() : renderPredictionCharts()}
       </div>
       
