@@ -260,9 +260,9 @@ const ModelComparisonDashboard = (props) => {
       
       {/* 콘텐츠 영역 */}
       <div className="content-area">
-  {props.activeTab === 'metrics' ? renderMetricsCharts() : 
-   props.activeTab === 'predictions' ? renderPredictionCharts() : 
-   renderMetricsCharts()} {/* 默认显示指标图表 */}
+ {activeTab === 'metrics' ? renderMetricsCharts() :
+ activeTab === 'predictions' ? renderPredictionCharts() :
+ renderMetricsCharts()}
 </div>
       
       {/* 모델 결론 */}
