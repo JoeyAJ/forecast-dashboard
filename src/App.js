@@ -22,29 +22,7 @@ function App() {
 
   return (
     <div>
-      {/* 删除这里的标题 */}
-      
-      {/* Navigation buttons */}
-      <div className="button-container">
-        <button 
-          className={`toggle-button ${activeTab === 'comparison' ? 'active' : 'inactive'}`}
-          onClick={() => setActiveTab('comparison')}
-        >
-          평가 지표 비교
-        </button>
-        <button 
-          className={`toggle-button ${activeTab === 'visualization' ? 'active' : 'inactive'}`}
-          onClick={() => setActiveTab('visualization')}
-        >
-          예측 결과 시각화
-        </button>
-        <button 
-          className={`toggle-button ${activeTab === 'regression' ? 'active' : 'inactive'}`}
-          onClick={() => setActiveTab('regression')}
-        >
-          회귀 분석 시각화
-        </button>
-      </div>
+      {/* 删除标题和导航按钮 */}
       
       {/* Content area */}
       <div className="chart-container">
