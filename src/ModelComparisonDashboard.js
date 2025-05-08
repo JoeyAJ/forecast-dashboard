@@ -1,10 +1,12 @@
+// 完整的 ModelComparisonDashboard.js 文件修复
 import React, { useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   LineChart, Line, ComposedChart, Scatter
 } from 'recharts';
 import './index.css';
-import RegressionAnalysisDashboard from './RegressionAnalysisDashboard';
+// 删除对 RegressionAnalysisDashboard 的导入，这可能导致循环引用
+// import RegressionAnalysisDashboard from './RegressionAnalysisDashboard';
 
 const ModelComparisonDashboard = (props) => {
   const activeTab = props.activeTab || 'metrics';
@@ -251,32 +253,34 @@ const ModelComparisonDashboard = (props) => {
     );
   };
   
- return (
-  <div>
-    {/* 콘텐츠 영역 제목 */}
-    <h3 className="text-xl font-bold mb-6 text-center">
-      {activeTab === 'metrics' ? '모델 평가 지표 비교' : activeTab === 'predictions' ? '모델 예측 결과 시각화' : '선형 회귀 분석'}
-    </h3>
-    
-    {/* 콘텐츠 영역 */}
-    <div className="content-area">
-      {activeTab === 'metrics' ? renderMetricsCharts() :
-       activeTab === 'predictions' ? renderPredictionCharts() :
-       renderMetricsCharts()}
+  return (
+    <div>
+      {/* 콘텐츠 영역 제목 */}
+      <h3 className="text-xl font-bold mb-6 text-center">
+        {activeTab === 'metrics' ? '모델 평가 지표 비교' : activeTab === 'predictions' ? '모델 예측 결과 시각화' : '선형 회귀 분석'}
+      </h3>
+      
+      {/* 콘텐츠 영역 */}
+      <div className="content-area">
+        {activeTab === 'metrics' ? renderMetricsCharts() :
+         activeTab === 'predictions' ? renderPredictionCharts() :
+         renderMetricsCharts()}
+      </div>
+      
+      {/* 모델 결론 */}
+      <div className="mt-8 p-6 bg-gray-50 rounded-lg text-center">
+        <h3 className="text-xl font-bold mb-4">모델 평가 결론</h3>
+        <p className="mb-2">MAE, MSE, RMSE, MAPE 및 R² 다섯 가지 평가 지표에 기반한 종합 분석:</p>
+        <ol className="list-decimal mx-auto inline-block text-left space-y-2">
+          <li><strong>랜덤 포레스트 모델</strong>이 MAE와 RMSE 지표에서 가장 우수한 성능을 보이며, 종합 순위 1위입니다.</li>
+          <li><strong>선형 회귀 모델</strong>이 R² 지표에서 가장 우수한 성능을 보이며, 종합 순위 2위입니다.</li>
+          <li><strong>ARIMA 모델</strong>은 시계열 예측에서 일정한 성능을 보이지만, 종합 순위 3위입니다.</li>
+          <li><strong>XGBoost 모델</strong>은 이 데이터셋에서 상대적으로 약한 성능을 보이며, 종합 순위 4위입니다.</li>
+        </ol>
+        <p className="mt-4"><strong>전체 결론:</strong> 랜덤 포레스트 모델이 이 전자상거래 판매 예측 작업에서 가장 우수한 성능을 보이므로, 향후 판매 예측에 이 모델을 사용하는 것이 권장됩니다.</p>
+      </div>
     </div>
-    
-    {/* 모델 결론 */}
-    <div className="mt-8 p-6 bg-gray-50 rounded-lg text-center">
-      <h3 className="text-xl font-bold mb-4">모델 평가 결론</h3>
-      <p className="mb-2">MAE, MSE, RMSE, MAPE 및 R² 다섯 가지 평가 지표에 기반한 종합 분석:</p>
-      <ol className="list-decimal mx-auto inline-block text-left space-y-2">
-        <li><strong>랜덤 포레스트 모델</strong>이 MAE와 RMSE 지표에서 가장 우수한 성능을 보이며, 종합 순위 1위입니다.</li>
-        <li><strong>선형 회귀 모델</strong>이 R² 지표에서 가장 우수한 성능을 보이며, 종합 순위 2위입니다.</li>
-        <li><strong>ARIMA 모델</strong>은 시계열 예측에서 일정한 성능을 보이지만, 종합 순위 3위입니다.</li>
-        <li><strong>XGBoost 모델</strong>은 이 데이터셋에서 상대적으로 약한 성능을 보이며, 종합 순위 4위입니다.</li>
-      </ol>
-      <p className="mt-4"><strong>전체 결론:</strong> 랜덤 포레스트 모델이 이 전자상거래 판매 예측 작업에서 가장 우수한 성능을 보이므로, 향후 판매 예측에 이 모델을 사용하는 것이 권장됩니다.</p>
-    </div>
-  </div>
-);
+  );
+};
+
 export default ModelComparisonDashboard;
