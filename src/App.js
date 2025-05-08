@@ -10,13 +10,13 @@ function App() {
   const renderContent = () => {
     switch(activeTab) {
       case 'comparison':
-        return <ModelComparisonDashboard />;
+        return <ModelComparisonDashboard activeTab="metrics" />;
       case 'visualization':
-        return <div>예측 결과 시각화 내용</div>; // 替换为实际的可视化组件
+        return <ModelComparisonDashboard activeTab="predictions" />; // Use the visualization part of ModelComparisonDashboard
       case 'regression':
         return <RegressionAnalysisDashboard />;
       default:
-        return <ModelComparisonDashboard />;
+        return <ModelComparisonDashboard activeTab="metrics" />;
     }
   };
 
@@ -24,7 +24,7 @@ function App() {
     <div>
       <h2>전자상거래 판매 예측 모델 비교</h2>
       
-      {/* 只保留一组导航按钮 */}
+      {/* Navigation buttons */}
       <div className="button-container">
         <button 
           className={`toggle-button ${activeTab === 'comparison' ? 'active' : 'inactive'}`}
@@ -46,7 +46,7 @@ function App() {
         </button>
       </div>
       
-      {/* 内容区域 */}
+      {/* Content area - removed the red box by not including duplicated header */}
       <div className="chart-container">
         {renderContent()}
       </div>
