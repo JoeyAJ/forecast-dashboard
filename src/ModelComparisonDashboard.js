@@ -4,6 +4,7 @@ import {
   LineChart, Line, ComposedChart, Scatter
 } from 'recharts';
 import './index.css';
+import RegressionAnalysisDashboard from './RegressionAnalysisDashboard';
 
 const ModelComparisonDashboard = () => {
   const [activeTab, setActiveTab] = useState('metrics');
@@ -268,16 +269,22 @@ const ModelComparisonDashboard = () => {
         >
           예측 결과 시각화
         </button>
+            <button
+  className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'regression' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+  onClick={() => setActiveTab('regression')}
+>
+  회귀 분석 시각화
+</button>
       </div>
       
       {/* 콘텐츠 영역 제목 */}
       <h3 className="text-xl font-bold mb-6 text-center">
-        {activeTab === 'metrics' ? '모델 평가 지표 비교' : '모델 예측 결과 시각화'}
+       {activeTab === 'metrics' ? '모델 평가 지표 비교' : activeTab === 'predictions' ? '모델 예측 결과 시각화' : '선형 회귀 분석'}
       </h3>
       
       {/* 콘텐츠 영역 */}
       <div className="content-area">
-        {activeTab === 'metrics' ? renderMetricsCharts() : renderPredictionCharts()}
+      {activeTab === 'metrics' ? renderMetricsCharts() : activeTab === 'predictions' ? renderPredictionCharts() : <RegressionAnalysisDashboard />}
       </div>
       
       {/* 모델 결론 */}
