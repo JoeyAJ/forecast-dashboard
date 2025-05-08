@@ -12,7 +12,7 @@ function App() {
       case 'comparison':
         return <ModelComparisonDashboard activeTab="metrics" />;
       case 'visualization':
-        return <ModelComparisonDashboard activeTab="predictions" />; // Use the visualization part of ModelComparisonDashboard
+        return <ModelComparisonDashboard activeTab="predictions" />; 
       case 'regression':
         return <RegressionAnalysisDashboard />;
       default:
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div>
-      <h2>전자상거래 판매 예측 모델 비교</h2>
+      {/* 删除这里的标题 */}
       
       {/* Navigation buttons */}
       <div className="button-container">
@@ -46,7 +46,7 @@ function App() {
         </button>
       </div>
       
-      {/* Content area - removed the red box by not including duplicated header */}
+      {/* Content area */}
       <div className="chart-container">
         {renderContent()}
       </div>
