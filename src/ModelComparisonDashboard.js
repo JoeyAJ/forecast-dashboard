@@ -6,8 +6,8 @@ import {
 import './index.css';
 import RegressionAnalysisDashboard from './RegressionAnalysisDashboard';
 
-const ModelComparisonDashboard = () => {
-  const [activeTab, setActiveTab] = useState('metrics');
+const ModelComparisonDashboard = (props) => {
+  const activeTab = props.activeTab || 'metrics';
   
   // 모델 평가 지표 데이터
   const metricsData = {
@@ -252,30 +252,6 @@ const ModelComparisonDashboard = () => {
   };
   
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">전자상거래 판매 예측 모델 비교</h2>
-      
-      {/* 탭 전환 */}
-      <div className="flex justify-center mb-6">
-        <button
-          className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'metrics' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
-          onClick={() => setActiveTab('metrics')}
-        >
-          평가 지표 비교
-        </button>
-        <button
-          className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'predictions' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
-          onClick={() => setActiveTab('predictions')}
-        >
-          예측 결과 시각화
-        </button>
-            <button
-  className={`px-4 py-2 mx-2 rounded-md ${activeTab === 'regression' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
-  onClick={() => setActiveTab('regression')}
->
-  회귀 분석 시각화
-</button>
-      </div>
       
       {/* 콘텐츠 영역 제목 */}
       <h3 className="text-xl font-bold mb-6 text-center">
@@ -284,8 +260,10 @@ const ModelComparisonDashboard = () => {
       
       {/* 콘텐츠 영역 */}
       <div className="content-area">
-      {activeTab === 'metrics' ? renderMetricsCharts() : activeTab === 'predictions' ? renderPredictionCharts() : <RegressionAnalysisDashboard />}
-      </div>
+  {props.activeTab === 'metrics' ? renderMetricsCharts() : 
+   props.activeTab === 'predictions' ? renderPredictionCharts() : 
+   renderMetricsCharts()} {/* 默认显示指标图表 */}
+</div>
       
       {/* 모델 결론 */}
       <div className="mt-8 p-6 bg-gray-50 rounded-lg text-center">
