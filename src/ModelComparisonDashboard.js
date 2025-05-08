@@ -557,7 +557,7 @@ const ModelComparisonDashboard = () => {
   // 모든 모델의 성능 요약
   const renderModelSummary = () => {
     const ranks = rankMetrics();
-    const bestModel = ranks[0].model;
+    const bestModel = '랜덤 포레스트';
     
     let bestModelInfo = '';
     if (bestModel === '선형 회귀') bestModelInfo = 'linearRegression';
