@@ -269,7 +269,7 @@ const ModelComparisonDashboard = () => {
         {/* 모델 성능 지표 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <div className="p-4 bg-gray-50 rounded-lg shadow text-center">
-          <h4 className="text-lg font-semibold mb-2 text-center">
+          <h4 className="text-lg font-semibold mb-2 text-center">MAE</h4>
             <p className="text-2xl text-center">{modelMetrics.MAE.toFixed(2)}</p>
             <p className="text-sm text-center text-gray-500">순위: {modelRank.MAE}위</p>
           </div>
